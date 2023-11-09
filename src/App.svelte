@@ -43,7 +43,11 @@ editor and files containing the robot code. The editor has syntax highlighting a
 is meant to be a very similar experience to coding in VSCode. In fact, the Monaco editor used here is the
 same editor which powers VSCode. Auto completion and other editor features are powered by the Pylance
 language server which the editor communicates with over WebSockets. The goal is to support Java and C++ as
-well, although Python was the easiest to support. 
+well, although Python was the easiest to support.
+
+The backend contains a client to the language server which is a proxy between the monaco editor on the frontend
+and the language server. The backend also runs the robot simulation tool which the frontend communicates with
+using the HALSim WebSocket. 
 
 The layout is inspired by the svelte tutorials here: https://learn.svelte.dev/tutorial/welcome-to-svelte
   `;
