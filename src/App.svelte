@@ -32,7 +32,20 @@
   ];
 
   let markdown = `
-# Hello, world!
+# Welcome!
+
+This is a demo of a robot learning tool I'm building. The goal is to allow students to practice
+programming robots by just visiting a website, nothing else required! 
+
+The goal is to build a collection of interactive tutorials students can go through to learn various robot
+programming related topics. This area will contain the tutorial instructions. On the right will be the
+editor and files containing the robot code. The editor has syntax highlighting and auto-completion, and
+is meant to be a very similar experience to coding in VSCode. In fact, the Monaco editor used here is the
+same editor which powers VSCode. Auto completion and other editor features are powered by the Pylance
+language server which the editor communicates with over WebSockets. The goal is to support Java and C++ as
+well, although Python was the easiest to support. 
+
+The layout is inspired by the svelte tutorials here: https://learn.svelte.dev/tutorial/welcome-to-svelte
   `;
 
   setSimWsContext();
@@ -46,7 +59,7 @@
 <main>
   <Splitpanes class="default-theme" style="height: 100vh">
     <Pane minSize={20}>
-      <div>
+      <div class="tutorial-content">
         {@html marked(markdown)}
       </div>
     </Pane>
@@ -78,7 +91,7 @@
   </Splitpanes>
 </main>
 
-<style>
+<style lang="scss">
   h2 {
     font-family: sans-serif;
     margin: 0 0 14px;
@@ -106,4 +119,16 @@
     padding: 10px;
     box-sizing: border-box;
   }
+
+  .tutorial-content {
+    width: 100%;
+    height: 100%;
+    padding: 10px 15px;
+    box-sizing: border-box;
+
+    & h1 {
+      margin: 0px;
+    }
+  }
 </style>
+ 
