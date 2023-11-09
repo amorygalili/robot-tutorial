@@ -37,6 +37,7 @@ import { createUrl } from "./common";
 
 import { buildWorkerDefinition } from "monaco-editor-workers";
 import { robotFileContent } from "./robot-file-content.js";
+import fileWatcher from "./file-watcher";
 buildWorkerDefinition(
   "../../../node_modules/monaco-editor-workers/dist/workers/",
   new URL("", window.location.href).href,
@@ -45,6 +46,7 @@ buildWorkerDefinition(
 
 const languageId = "python";
 let languageClient: MonacoLanguageClient;
+
 
 const createWebSocket = (url: string): WebSocket => {
   const webSocket = new WebSocket(url);
@@ -236,8 +238,15 @@ export const startPythonClient = async () => {
   modelRef.object.setLanguageId(languageId);
 
   // create monaco editor
-  createConfiguredEditor(document.getElementById("container")!, {
+  const editor = createConfiguredEditor(document.getElementById("container")!, {
     model: modelRef.object.textEditorModel,
     automaticLayout: true,
   });
+
+  // listen for changes in the editor and send the updated content to the language server.
+  editor.onDidChangeModelContent((e) => {
+    const fileContents = editor.getValue();
+    fileWatcher.sendUpdatedFileContents(fileContents);
+  });
+  
 };

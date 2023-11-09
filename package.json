@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node --experimental-import-meta-resolve ./node_modules/vite/bin/vite.js",
     "dev:server:python": "node --loader ts-node/esm server/direct.ts",
-    "dev:robot:sim": "cd ./bleh/workspace && py -3 robot.py sim --ws-server",
+    "dev:robot:sim": "cd ./bleh/workspace && py -3 robot.py sim --ws-server --nogui",
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json"
@@ -15,6 +15,7 @@
     "@sveltejs/vite-plugin-svelte": "^2.4.2",
     "@tsconfig/svelte": "^5.0.0",
     "@types/express": "~4.17.18",
+    "@types/lodash": "^4.14.201",
     "@types/node": "~18.18.8",
     "@types/react": "~18.2.33",
     "@types/react-dom": "~18.2.14",
@@ -59,6 +60,7 @@
     "install": "^0.13.0",
     "langium": "~2.1.0",
     "langium-statemachine-dsl": "~2.1.0",
+    "lodash": "^4.17.21",
     "marked": "^9.1.5",
     "monaco-editor": "npm:@codingame/monaco-editor-treemended@>=1.83.5 <1.84.0",
     "monaco-editor-workers": "~0.44.0",
@@ -69,6 +71,7 @@
     "react-dom": "~18.2.0",
     "request-light": "~0.7.0",
     "svelte-splitpanes": "^0.8.0",
+    "tree-kill": "^1.2.2",
     "vscode": "npm:@codingame/monaco-vscode-api@>=1.83.5 <1.84.0",
     "vscode-json-languageservice": "~5.3.7",
     "vscode-languageclient": "~9.0.1",

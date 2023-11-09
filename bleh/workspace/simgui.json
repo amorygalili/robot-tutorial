@@ -19,6 +19,12 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/LiveWindow/Ungrouped/AnalogGyro[1]": "Gyro",
+      "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
+      "/LiveWindow/Ungrouped/Jaguar[1]": "Motor Controller",
+      "/LiveWindow/Ungrouped/Jaguar[2]": "Motor Controller",
+      "/LiveWindow/Ungrouped/Jaguar[3]": "Motor Controller",
+      "/LiveWindow/Ungrouped/Jaguar[4]": "Motor Controller",
       "/SmartDashboard/Field": "Field2d"
     },
     "windows": {
