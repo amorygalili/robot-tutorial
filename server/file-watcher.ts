@@ -2,16 +2,16 @@ import express from "express";
 import http from "http";
 import { WebSocketServer } from "ws";
 import fs from "fs";
-import { join } from "path";
+import { join, resolve } from "path";
 import { ChildProcess, type ExecException, exec } from "child_process";
 import treeKill from 'tree-kill';
+import { getLocalDirectory } from "./fs-utils.js";
 
 const app = express();
 const server = http.createServer(app);
 const wss = new WebSocketServer({ server });
 
-const projectPath =
-  "C:/Users/amory/Documents/repos/robot-tutorial/bleh/workspace";
+const projectPath = resolve(getLocalDirectory(import.meta.url), "..", "bleh", "workspace");
 
 // Serve the frontend
 app.use(express.static("public"));

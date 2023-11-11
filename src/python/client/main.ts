@@ -34,19 +34,28 @@ import {
 } from "@codingame/monaco-vscode-files-service-override";
 import { Uri } from "vscode";
 import { createUrl } from "./common";
-
 import { buildWorkerDefinition } from "monaco-editor-workers";
 import { robotFileContent } from "./robot-file-content.js";
 import fileWatcher from "./file-watcher";
+// import { getLocalDirectory } from "./fs-utils.js";
 buildWorkerDefinition(
   "../../../node_modules/monaco-editor-workers/dist/workers/",
   new URL("", window.location.href).href,
   false
 );
 
+const projectPath = '/c:/Users/amory/Documents/repos/robot-tutorial/bleh/workspace';
+// const projectPath = resolve(
+//   getLocalDirectory(import.meta.url),
+//   "..",
+//   "..",
+//   "..",
+//   "bleh",
+//   "workspace"
+// );
+
 const languageId = "python";
 let languageClient: MonacoLanguageClient;
-
 
 const createWebSocket = (url: string): WebSocket => {
   const webSocket = new WebSocket(url);
@@ -60,18 +69,6 @@ const createWebSocket = (url: string): WebSocket => {
     });
     await languageClient.start();
     reader.onClose(() => languageClient.stop());
-
-    // listen for "textDocument/rename" messages from the language server using the
-    // websocket and update the monaco editor accordingly
-    // console.log("languageClient:", languageClient);
-    // languageClient.onRequest("textDocument/rename", (params) => {
-    //     console.log("textDocument/rename", params);
-    //     // const { oldUri, newUri } = params;
-    //     // const model = monaco.editor.getModel(monaco.Uri.parse(oldUri));
-    //     // if (model) {
-    //     //     model.uri = monaco.Uri.parse(newUri);
-    //     // }
-    // });
   };
 
   return webSocket;
@@ -94,9 +91,7 @@ const createLanguageClient = (
       workspaceFolder: {
         index: 0,
         name: "workspace",
-        uri: monaco.Uri.parse(
-          "file:///c:/Users/amory/Documents/repos/robot-tutorial/bleh/workspace"
-        ),
+        uri: monaco.Uri.parse(`file://${projectPath}`),
       },
       synchronize: {
         fileEvents: [vscode.workspace.createFileSystemWatcher("**")],
@@ -117,11 +112,7 @@ export const startPythonClient = async () => {
     userServices: {
       ...getThemeServiceOverride(),
       ...getTextmateServiceOverride(),
-      ...getConfigurationServiceOverride(
-        Uri.file(
-          "/c:/Users/amory/Documents/repos/robot-tutorial/bleh/workspace"
-        )
-      ),
+      ...getConfigurationServiceOverride(Uri.file(projectPath)),
       ...getKeybindingsServiceOverride(),
     },
     debugLogging: true,
@@ -181,9 +172,7 @@ export const startPythonClient = async () => {
   const fileSystemProvider = new RegisteredFileSystemProvider(false);
   fileSystemProvider.registerFile(
     new RegisteredMemoryFile(
-      vscode.Uri.file(
-        "/c:/Users/amory/Documents/repos/robot-tutorial/bleh/workspace/robot.py"
-      ),
+      vscode.Uri.file(`${projectPath}/robot.py`),
       robotFileContent
     )
   );
@@ -231,9 +220,7 @@ export const startPythonClient = async () => {
 
   // use the file create before
   const modelRef = await createModelReference(
-    monaco.Uri.file(
-      "/c:/Users/amory/Documents/repos/robot-tutorial/bleh/workspace/robot.py"
-    )
+    monaco.Uri.file(`${projectPath}/robot.py`)
   );
   modelRef.object.setLanguageId(languageId);
 
@@ -248,5 +235,4 @@ export const startPythonClient = async () => {
     const fileContents = editor.getValue();
     fileWatcher.sendUpdatedFileContents(fileContents);
   });
-  
 };

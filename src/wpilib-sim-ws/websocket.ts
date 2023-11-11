@@ -1,5 +1,5 @@
 import { setContext, getContext } from "svelte";
-import { WPILibWebSocketClient } from "browser-wpilib-ws";
+import { WPILibWebSocketClient } from "@wpilib/node-wpilib-ws";
 
 export const wss = new WPILibWebSocketClient();
 
